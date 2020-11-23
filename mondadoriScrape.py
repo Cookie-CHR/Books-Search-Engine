@@ -89,9 +89,7 @@ for quel in range(0, len(titles)):
     outF.close()
     
 # Ho raschiato tutti i link
-## Metto tutto in file .csv
-df = pd.DataFrame({'Titolo':titles,'Autore':authors,'Trama':plots}) 
-df.to_csv('mondadorilibri.csv', index=False, encoding='utf-8')    
+   
 
 
 

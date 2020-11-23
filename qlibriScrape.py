@@ -74,7 +74,7 @@ for c in categories:
 # Ho raschiato tutti i link     
 # Metto i risultati in tanti file diversi
 for i in range(len(plots)):
-    outF = open("scraping/"+replaced(titles[i])+"-"+replaced(authors[i])+".txt", "w")
+    outF = open("scraping/"+replaced(titles[i])+".txt", "w")
     outF.write(titles[i]+"\n")
     outF.write(authors[i]+"\n")
     outF.write(plots[i])

@@ -5,15 +5,17 @@ import os, os.path
 
 ix = open_dir("indexdir")
 
+# Faccio digitare la query dall'utente
+userQuery = input("Inserire una parola o frase da cercare: ")
+
 searcher = ix.searcher()
-print(list(searcher.lexicon("content")))
 parser = QueryParser("content", schema=ix.schema)
-query = parser.parse("uno")
+query = parser.parse(userQuery)
 results = searcher.search(query)
  
 
-# Top 'n' documents as result - if exist
-topN = int(25)
+# Restituisco i primi topN risultati - se esistono
+topN = int(10) # il 10 l'ho messo a caso
 i=1
 
 for r in results:
