@@ -82,7 +82,7 @@ for quel in range(0, len(titles)):
     
     # Metto i dati del libro selezionato su un file
     # open a (new) file to write
-    outF = open("scraping/"+replaced(titles[quel])+"-"+replaced(authors[quel])+".txt", "w")
+    outF = open("scraping/"+replaced(titles[quel])+".txt", "w")
     outF.write(titles[quel]+"\n")
     outF.write(authors[quel]+"\n")
     outF.write(plot)

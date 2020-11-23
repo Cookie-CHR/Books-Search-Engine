@@ -4,6 +4,22 @@ from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup
 import pandas as pd
 
+def replaced(str):
+    # sostituisce alcuni caratteri di una stringa con altri.
+    # serve per il passaggio da titolo/autore a parte del link
+    str = str.replace(" ","-")
+    str = str.replace("à","a")
+    str = str.replace("è","e")
+    str = str.replace("é","e")
+    str = str.replace("ì","i")
+    str = str.replace("ò","o")
+    str = str.replace("ó","o")
+    str = str.replace("ö","o")
+    str = str.replace("ù","u")
+    str = str.replace("ð","d")
+    return str
+
+
 ## Funzione che fa effettivamente lo scraping, separata dal resto per leggibilità
 def soupScraping(driver, titles, authors, plots):
     content = driver.page_source
@@ -54,11 +70,17 @@ for c in categories:
         driver.get("https://www.qlibri.it/recensioni/"+g+"-narrativa-"+c+"/")    
         ##Estraggo le info (vedi funzione apposita)
         titles, authors, plots = soupScraping(driver, titles, authors, plots)
-    
 
-# Ho raschiato tutti i link
+# Ho raschiato tutti i link     
+# Metto i risultati in tanti file diversi
+for i in range(len(plots)):
+    outF = open("scraping/"+replaced(titles[i])+"-"+replaced(authors[i])+".txt", "w")
+    outF.write(titles[i]+"\n")
+    outF.write(authors[i]+"\n")
+    outF.write(plots[i])
+    outF.close()
 
-## Metto tutto in file .csv
-df = pd.DataFrame({'Titolo':titles,'Autore':authors,'Trama':plots}) 
-df.to_csv('qlibri.csv', index=False, encoding='utf-8')    
+
+
+
 
