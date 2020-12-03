@@ -9,7 +9,7 @@ ix = open_dir("indexdir")
 userQuery = input("Inserire una parola o frase da cercare: ")
 
 searcher = ix.searcher()
-parser = QueryParser("content", schema=ix.schema)
+parser = QueryParser("contentData", schema=ix.schema)
 query = parser.parse(userQuery)
 results = searcher.search(query)
  
@@ -21,5 +21,6 @@ i=1
 for r in results:
     if i > topN:
         break
-    print(i, r['title'], str(r.score), r['textdata'])
+    print(i, str(r.score), r['title'],r['author'])
+    print(r['content'][:255]+"...\n\n")
     i+=1
