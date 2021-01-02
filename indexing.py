@@ -1,6 +1,7 @@
 import os
 from whoosh.index import create_in
 from whoosh.fields import *
+from whoosh.writing import AsyncWriter
 import sys
 
 import nltk
@@ -33,10 +34,13 @@ def createSearchableData(root):
     ## creo la directory indexdir
     if not os.path.exists("indexdir"):
         os.mkdir("indexdir")
- 
+    
+    cwd = os.getcwd()
+    print(cwd)
+    
     ## Creo un indexWriter, che aggiunga i documenti secondo lo schema
     ix = create_in("indexdir",schema)
-    writer = ix.writer()
+    writer = AsyncWriter(ix)
  
     ## Trovo i file nella directory, e ne salvo i percorsi
     filepaths = [os.path.join(root,i) for i in os.listdir(root)]
@@ -44,11 +48,12 @@ def createSearchableData(root):
     num = 1
     # per ogni percorso trovato...
     for path in filepaths:
-        print(num)
+        #print(num)
         num+=1
     
-        fp = open(path,'r')
-        
+        fp = open(path,'r', encoding="utf-8")
+        #print(path)
+
         # Nella prima riga ho messo il titolo, nella seconda l'autore, nella terza il genere, nella quarta il link
         fileTitle = fp.readline()
         fileAuthor = fp.readline()
@@ -72,5 +77,5 @@ def createSearchableData(root):
         fp.close()
     writer.commit()
  
-root = "scraping"
+root = "C:\\Users\Seren\.spyder-py3\Books-Search-Engine\scraping"
 createSearchableData(root)
