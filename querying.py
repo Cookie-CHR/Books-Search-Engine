@@ -25,17 +25,16 @@ for syn in wn.synsets(userQuery, lang = "ita"):
 searcher = ix.searcher()
 
 #implementa la ricerca anche per titolo, autore o genere
-parser = MultifieldParser(["contentData", "title", "author", "genre"], schema=ix.schema) 
+parser = MultifieldParser(["contentData", "title", "author", "genre", "content"], schema=ix.schema) 
 
 for s in synonyms:
- 
     query = parser.parse(s)
     results = searcher.search(query)
     
     if len(results) > 0:
         print(s)
         # Restituisco i primi topN risultati - se esistono
-        topN = int(3) # primi 3 sennò viene un casino
+        topN = int(5) # primi 3 sennò viene un casino
         i=1
         
         for r in results:
