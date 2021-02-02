@@ -21,7 +21,8 @@ def tokenize(text):
     
 
 def createSearchableData(root):   
- 
+    
+    ana = analysis.StemmingAnalyzer()
     ## definisco lo schema del mio indice
     schema = Schema( title=TEXT(stored=True),\
                      author=TEXT(stored=True),\
@@ -30,7 +31,7 @@ def createSearchableData(root):
                      path=ID(stored=True), \
                      content=TEXT(stored=True),\
                      contentData=TEXT)
-                     
+                         
     ## creo la directory indexdir
     if not os.path.exists("indexdir"):
         os.mkdir("indexdir")
