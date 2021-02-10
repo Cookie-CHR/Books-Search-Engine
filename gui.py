@@ -8,7 +8,7 @@ Created on Wed Jan 27 22:15:05 2021
 import PySimpleGUI as sg
 from querying import searchWord
 
-sg.theme('Dark Blue 3')   #Aggiunge colore alla finestra
+sg.theme('LightBrown2')   #Aggiunge colore alla finestra
 
 # Tutta la roba all'interno della finestra
 layout = [  [sg.Text('Benvenuto/a nel nostro Search Engine!')],
@@ -19,6 +19,7 @@ layout = [  [sg.Text('Benvenuto/a nel nostro Search Engine!')],
             [sg.Text("In quale sito cercare: "), sg.OptionMenu(('Tutti', 'LibriMondadori', 'Piemme', 'Rizzoli'))],
             
             [sg.Button('Search'), sg.Button('Cancel')],
+            [sg.Image(filename="Separator.png")]
          ]
 
 # Creazione della finestra
