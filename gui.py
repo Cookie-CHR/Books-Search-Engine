@@ -8,14 +8,14 @@ Created on Wed Jan 27 22:15:05 2021
 import PySimpleGUI as sg
 from querying import searchWord
 
-sg.theme('LightBrown2')   #Aggiunge colore alla finestra
+sg.theme('GreenTan')   #Aggiunge colore alla finestra
 
 # Tutta la roba all'interno della finestra
 layout = [  [sg.Text('Benvenuto/a nel nostro Search Engine!')],
             
             [sg.Text("Inserire una parola o frase da cercare: "), sg.InputText()],
             
-            [sg.Text("In quale categoria cercare: "), sg.OptionMenu(('Tutte', 'Titolo', 'Autore', 'Genere', 'Trama'))],
+            [sg.Text("In quale categoria cercare: "), sg.OptionMenu(('Tutte', 'Titolo   ', 'Autore', 'Genere', 'Trama'))],
             [sg.Text("In quale sito cercare: "), sg.OptionMenu(('Tutti', 'LibriMondadori', 'Piemme', 'Rizzoli'))],
             
             [sg.Button('Search'), sg.Button('Cancel')],
@@ -23,7 +23,7 @@ layout = [  [sg.Text('Benvenuto/a nel nostro Search Engine!')],
          ]
 
 # Creazione della finestra
-window = sg.Window('Search Engine', layout, element_justification='c')
+window = sg.Window('Search Engine', layout, element_justification= 'l')
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
     event, values = window.read()
