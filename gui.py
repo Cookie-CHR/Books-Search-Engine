@@ -15,8 +15,8 @@ def updateField(field, r):
     field.update(visible=True)
     # vuoto il contenuto precedente e lo ri-riempio
     field.update("")
-    field.print(str(i)+"  "+r['title'].replace("\n", "")+", "+r['author'].replace("\n", "")+"\n", \
-                 background_color='sea green', text_color='white', )
+    field.print(str(i)+"  "+r['title'].replace("\n", "")+", "+r['author'].replace("\n", ""), \
+                 background_color='aquamarine4', text_color='white')
     field.print(r['genre']+r['content'][:255]+"...")
     print(str(r.score), r['title'],r['author'], r['genre'])
 
