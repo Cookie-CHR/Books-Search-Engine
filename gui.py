@@ -6,52 +6,76 @@ Created on Wed Jan 27 22:15:05 2021
 """
 
 import PySimpleGUI as sg
+import re
+import string
+import subprocess, os, platform
 from querying import searchWord
 
 sg.theme('GreenTan')   #Aggiunge colore alla finestra
 
-def updateField(field, r):
-    # aggiorna un campo (field) facendogli mostrare i dati di un risultato (r)
-    field.update(visible=True)
+def replaced(s):
+    # sostituisce alcuni caratteri di una stringa con altri.
+    # serve per il passaggio da titolo/autore a parte del link
+    s = s.translate(str.maketrans('', '', string.punctuation)) # tolgo la punteggiatura
+    
+    s = s.replace("\n","")
+    s = s.replace(" ","-")
+    s = s.replace("à","a")
+    s = s.replace("è","e")
+    s = s.replace("é","e")
+    s = s.replace("é","e")
+    s = s.replace("ì","i")
+    s = s.replace("ò","o")
+    s = s.replace("ó","o")
+    s = s.replace("ö","o")
+    s = s.replace("ù","u")
+    s = s.replace("ð","d")
+    
+    return s
+             
+def updateField(i, r):
+    # aggiorna un campo (rappresentato dall'index i) facendogli mostrare i dati di un risultato (r)
+    window['-COLUMN'+str(i)+'-'].update(visible=True)
+    
     # vuoto il contenuto precedente e lo ri-riempio
-    field.update("")
-    field.print(str(i)+"  "+r['title'].replace("\n", "")+", "+r['author'].replace("\n", ""), \
-                 background_color='aquamarine4', text_color='white')
-    field.print(r['genre']+r['content'][:255]+"...")
+    window['-FIELD'+str(i)+'-'].update("")
+    window['-FIELD'+str(i)+'-'].print(str(i+1)+"  "+r['title'].replace("\n", "")+", "+r['author'].replace("\n", ""), \
+                                      background_color='#475841', text_color='white')
+    window['-FIELD'+str(i)+'-'].print(r['genre']+r['content'][:255]+"...")
     print(str(r.score), r['title'],r['author'], r['genre'])
 
-def hideField(field):
-    # Ho finito i risultati da mostrare: il campo field verrà nascosto e svuotato
-    field.update(visible=False)
-    field.update("")
+def hideField(i):
+    # Ho finito i risultati da mostrare: il campo verrà nascosto e svuotato
+    window['-COLUMN'+str(i)+'-'].update(visible=False)
+    window['-FIELD'+str(i)+'-'].update("")
 
+
+
+#un risultato, associato al suo bottone
+def fieldSingle(i):
+    return [[sg.Button("Vai alla pagina", key='-BUTTON'+str(i)+'-', size=(6,8)), 
+            sg.MLine("", key='-FIELD'+str(i)+'-', size=(70,9), disabled=True, autoscroll = False)
+           ]]
+# tocca raggruppare questi puzzoni in una colonna, sennò non si allineano
+def fieldCol(i):
+    return [sg.Column(layout=fieldSingle(i), key='-COLUMN'+str(i)+'-', visible=False)]
 # L'intera colonna dei risultati (inizializzata separatamente per essere scrollabile
-resCol = [  [sg.MLine("", key='-FIELD1-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD2-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD3-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD4-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD5-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD6-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD7-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD8-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD9-', size=(80,9), visible=False)],
-            [sg.MLine("", key='-FIELD10-', size=(80,9), visible=False)],
-         ]
+resCol = [  fieldCol(i) for i in range(0,10)]
 
 
 
 # Tutta la roba all'interno della finestra
 layout = [  [sg.Text('Benvenuto/a nel nostro Search Engine!')],
-            
+
             [sg.Text("Inserire una parola o frase da cercare: "), sg.InputText()],
             
-            [sg.Text("In quale categoria cercare: "), sg.OptionMenu(('Tutte', 'Titolo   ', 'Autore', 'Genere', 'Trama'))],
-            [sg.Text("In quale sito cercare: "), sg.OptionMenu(('Tutti', 'LibriMondadori', 'Piemme', 'Rizzoli'))],
+            [sg.Text("In quale categoria cercare: "), sg.OptionMenu(('Tutte', 'Titolo', 'Autore', 'Genere', 'Trama'), size=(10,1))],
+            [sg.Text("In quale sito cercare:  "), sg.OptionMenu(('Tutti', 'LibriMondadori', 'Piemme', 'Rizzoli'), size=(14,1))],
             
             [sg.Button('Search'), sg.Button('Cancel')],
             [sg.Image(filename="Separator.png")],
             [sg.Text("", key='-OutputStart-', size=(100,1))],
-            [sg.Column(resCol, size=(600,400), scrollable=True, key='-COLUMN-')]
+            [sg.Column(resCol, size=(610,400), scrollable=True, key='-COLUMN-', vertical_scroll_only = True)]
          ]
          
 # Creazione della finestra
@@ -73,13 +97,25 @@ while True:
         
         #Poi mostriamo i risultati effettivi uno a uno
         i=1
-        for r in results:
-            updateField(window['-FIELD'+str(i)+'-'], r)
-            i+=1
-        for j in range (i, 10+1):
-            hideField(window['-FIELD'+str(j)+'-'])
-            j+=1
+        for i in range(0,10):
+            if i < len(results):
+                updateField(i, results[i])
+            else:
+                hideField(i)
         window.refresh()                            # refresh required here
         window['-COLUMN-'].contents_changed()  
+    elif re.match(r'-BUTTON.*', event):
+        # ricavo il bottone
+        i = int(event[7:-1])
+        #ricavo il path del file corrispondente
+        filepath = "scraping/"+replaced(results[i]['title'])+".txt"
+        print(filepath)
+        # apro il file
+        if platform.system() == 'Darwin':       # macOS
+            subprocess.call(('open', filepath))
+        elif platform.system() == 'Windows':    # Windows
+            os.startfile(filepath)
+        else:                                   # linux variants
+            subprocess.call(['xdg-open', filepath])
 window.close()
 

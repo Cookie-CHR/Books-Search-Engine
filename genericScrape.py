@@ -10,6 +10,7 @@ def replaced(s):
     # serve per il passaggio da titolo/autore a parte del link
     s = s.translate(str.maketrans('', '', string.punctuation)) # tolgo la punteggiatura
     
+    s = s.replace("\n","")
     s = s.replace(" ","-")
     s = s.replace("à","a")
     s = s.replace("è","e")
