@@ -6,6 +6,7 @@ from whoosh import qparser
 from nltk.corpus import wordnet as wn
 import nltk
 import enchant
+import operator
 
 #roba che serve per far funzionare i sinonimi in italiano
 nltk.download('wordnet')
@@ -41,6 +42,10 @@ def searchWord(userQuery, category):
     #implementa la ricerca anche per titolo, autore o genere, a seconda della scelta dell'utente
     parser = MultifieldParser(catTranslate(category), schema=ix.schema) 
 
+
+
+    # Creo l'array dei risultati da restituire all'interfaccia
+    resultsTot = [];
     for syn in synonyms:
         query = parser.parse(syn)
         # # Try correcting the query
@@ -52,21 +57,15 @@ def searchWord(userQuery, category):
 
         results = searcher.search(query)
         
-        # Creo l'array dei risultati da restituire all'interfaccia
-        resultsTot = [];
     
-        if len(results) > 0:
-            print(syn)
-            # Restituisco i primi topN risultati - se esistono
-            topN = int(5) # primi 3 sennò viene un casino
-            i=1
-        
-            for r in results:
-                if i > topN:
-                    break
-            
+        if len(results) > 0:       
+            for r in results:  
                 resultsTot.append(r) # aggiungo r ai risultati
-                i+=1
-    return resultsTot
+    # Ri-ordino i risultati in base all'affinità
+    resultsTot.sort(key=operator.attrgetter('score'), reverse=True)
+
+    return resultsTot[0:min(len(resultsTot),10)]
+
+
 
 
