@@ -114,18 +114,18 @@ class book:
             plot = self.ifPlot(soup, plotBool)
             
             # Creo il link (questo va fatto per forza nella pagina principale, un ifLink non avrebbe senso)
-            link = self.findLink(soup)
+            link = self.findLink(soup).replace("\n","")
             
             ## Check che tutto sia sincronizzato
             if not somethingWrong(titleBool, title, authorBool, author, genreBool, genre, priceBool, price, plotBool, plot):
                 if link is not None:
                     # appendo i risultati ai loro array
                     self.links.append(link)
-                    if(titleBool): self.titles.append(title)
-                    if(authorBool): self.authors.append(author)
-                    if(genreBool): self.genres.append(genre)
-                    if(priceBool): self.prices.append(price)
-                    if(plotBool): self.plots.append(plot)
+                    if(titleBool): self.titles.append(title.replace("\n",""))
+                    if(authorBool): self.authors.append(author.replace("\n",""))
+                    if(genreBool): self.genres.append(genre.replace("\n",""))
+                    if(priceBool): self.prices.append(price.replace("\n",""))
+                    if(plotBool): self.plots.append(plot.replace("\n",""))
                 
             
         
@@ -169,11 +169,11 @@ class book:
                         
                 
             else: # se tutto è ok, appendo i risultati ai loro array
-                if(titleBool): self.titles.append(title)
-                if(authorBool): self.authors.append(author)
-                if(genreBool): self.genres.append(genre)
-                if(priceBool): self.prices.append(price)
-                if(plotBool): self.plots.append(plot)
+                if(titleBool): self.titles.append(title.replace("\n",""))
+                if(authorBool): self.authors.append(author.replace("\n",""))
+                if(genreBool): self.genres.append(genre.replace("\n",""))
+                if(priceBool): self.prices.append(price.replace("\n",""))
+                if(plotBool): self.plots.append(plot.replace("\n",""))
             
             print(len(self.plots), "/",len(self.titles), "	", self.titles[len(self.plots)-1])
         print ("Finito il soupscrape!")
