@@ -29,6 +29,7 @@ def createSearchableData(root):
                      genre=KEYWORD(stored=True), \
                      link=ID(stored=True), \
                      path=ID(stored=True), \
+                     price=ID(stored=True), \
                      content=TEXT(stored=True),\
                      contentData=TEXT)
                          
@@ -55,11 +56,12 @@ def createSearchableData(root):
         fp = open(path,'r', encoding="utf-8")
         #print(path)
 
-        # Nella prima riga ho messo il titolo, nella seconda l'autore, nella terza il genere, nella quarta il link
+        # Nella prima riga ho messo il titolo, nella seconda l'autore, nella terza il genere, nella quarta il link, nella quinta il prezzo
         fileTitle = fp.readline()
         fileAuthor = fp.readline()
         fileGenre = fp.readline()
         fileLink = fp.readline()
+        filePrice = fp.readline()
         
         # Tutto il resto del file è occupato dalla trama
         filePlot = fp.read()
@@ -73,10 +75,12 @@ def createSearchableData(root):
                              author = fileAuthor,\
                              genre = fileGenre,\
                              link = fileLink,\
+                             price = filePrice, \
                              content = filePlot,\
                              contentData = fileData)
         fp.close()
     writer.commit()
  
-root = "C:\\Users\Seren\.spyder-py3\Books-Search-Engine\scraping"
+root = os.getcwd()+"/scraping"
 createSearchableData(root)
+
