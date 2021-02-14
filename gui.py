@@ -42,7 +42,6 @@ def updateField(i, r):
     window['-FIELD'+str(i)+'-'].print(str(i+1)+"  "+r['title'].replace("\n", "")+", "+r['author'].replace("\n", ""), \
                                       background_color='#475841', text_color='white')
     window['-FIELD'+str(i)+'-'].print(r['genre']+r['content'][:255]+"...")
-    print(str(r.score), r['title'],r['author'], r['genre'])
 
 def hideField(i):
     # Ho finito i risultati da mostrare: il campo verrà nascosto e svuotato
@@ -108,8 +107,7 @@ while True:
         # ricavo il bottone
         i = int(event[7:-1])
         #ricavo il path del file corrispondente
-        filepath = "scraping/"+replaced(results[i]['title'])+".txt"
-        print(filepath)
+        filepath = os.getcwd()+"/scraping/"+replaced(results[i]['title'])+".txt"
         # apro il file
         if platform.system() == 'Darwin':       # macOS
             subprocess.call(('open', filepath))
