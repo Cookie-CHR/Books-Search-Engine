@@ -25,8 +25,20 @@ def catTranslate(category):
         "Trama":["contentData", "content"]
     }
     return switcher.get(category)
+    
+def siteTranslate(site):
+    # Uno switch per identificare le il sito in cui effettuare la ricerca.
+    # site è il sito scelto dall'utente tramite l'apposito menu a tendina
+    switcher={
+        "Tutti":"https://.*",
+        "LibriMondadori":"https://www.librimondadori.it/.*",
+        "Piemme":"https://www.edizpiemme.it/.*",
+        "Rizzoli":"https://.*.rizzolilibri.it/.*",
+    }
+    return switcher.get(site)    
 
-def searchWord(userQuery, category):
+
+def searchWord(userQuery, category="tutte", site="tutti"):
     # d = enchant.Dict()
     # d.check(userQuery)
     #creo la lista dei sinonimi
@@ -43,6 +55,7 @@ def searchWord(userQuery, category):
     parser = MultifieldParser(catTranslate(category), schema=ix.schema) 
 
 
+    siteChoice = siteTranslate(site)
 
     # Creo l'array dei risultati da restituire all'interfaccia
     resultsTot = [];
@@ -56,11 +69,11 @@ def searchWord(userQuery, category):
     
 
         results = searcher.search(query)
-        
     
         if len(results) > 0:       
             for r in results:  
-                resultsTot.append(r) # aggiungo r ai risultati
+                if re.match(siteChoice, r['link']):
+                    resultsTot.append(r) # aggiungo r ai risultati
     # Ri-ordino i risultati in base all'affinità
     resultsTot.sort(key=operator.attrgetter('score'), reverse=True)
 

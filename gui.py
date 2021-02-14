@@ -52,8 +52,8 @@ def hideField(i):
 
 #un risultato, associato al suo bottone
 def fieldSingle(i):
-    return [[sg.Button("Vai alla pagina", key='-BUTTON'+str(i)+'-', size=(6,8)), 
-            sg.MLine("", key='-FIELD'+str(i)+'-', size=(70,9), disabled=True, autoscroll = False)
+    return [[sg.Button("Vai alla pagina", key='-BUTTON'+str(i)+'-', size=(6,7)), 
+            sg.MLine("", key='-FIELD'+str(i)+'-', size=(70,8), disabled=True, autoscroll = False)
            ]]
 # tocca raggruppare questi puzzoni in una colonna, sennò non si allineano
 def fieldCol(i):
@@ -89,7 +89,7 @@ while True:
         break
     elif event == 'Search':
         # eseguo la query
-        results = searchWord(values[0], values[1])
+        results = searchWord(values[0], values[1], values[2])
         
         #Risultati! Iniziamo dalla riga di intestazione
         window['-OutputStart-'].update("Hai cercato "+values[0]+": Sono stati ritrovati "+str(len(results))+" risultati.") 
