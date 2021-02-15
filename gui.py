@@ -10,6 +10,7 @@ import re
 import string
 import subprocess, os, platform
 from querying import searchWord
+import webbrowser
 
 sg.theme('GreenTan')   #Aggiunge colore alla finestra
 
@@ -108,12 +109,14 @@ while True:
         i = int(event[7:-1])
         #ricavo il path del file corrispondente
         filepath = os.getcwd()+"/scraping/"+replaced(results[i]['title'])+".txt"
-        # apro il file
-        if platform.system() == 'Darwin':       # macOS
-            subprocess.call(('open', filepath))
-        elif platform.system() == 'Windows':    # Windows
-            os.startfile(filepath)
-        else:                                   # linux variants
-            subprocess.call(['xdg-open', filepath])
+        # apro il file sul browser predefinito
+        webbrowser.open_new_tab(results[i]['link'])
+        
+        # if platform.system() == 'Darwin':       # macOS
+        #     subprocess.call(('open', filepath))
+        # elif platform.system() == 'Windows':    # Windows
+        #     os.startfile(filepath)
+        # else:                                   # linux variants
+        #     subprocess.call(['xdg-open', filepath])
 window.close()
 
