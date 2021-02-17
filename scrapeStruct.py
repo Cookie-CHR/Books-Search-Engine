@@ -80,6 +80,13 @@ class book:
             if p is not None:
                 if not isinstance(p, str):
                     p = p.text
+                # formattazione addizionale per rendere omogenea la scrittura dei prezzi nei vari siti
+                p = p.replace("Prezzo:", "") # via l'eventuale scritta "Prezzo:"
+                p = p.replace(" ","")        # tolgo anche gli spazi
+                p = p.replace(",",".")       # sostituisco la virgola in mezzo al prezzo con un punto
+                p = p.replace("€","")        # togliamo il simbolo dell'euro...
+                p = p+" €"                   # e lo rimettiamo, ma sempre in fondo alla stringa
+                    
                 return p
     def ifPlot(self, soup, plotBool):
         if plotBool:
@@ -217,7 +224,7 @@ class MondadoriBook(book):
     def findPrice(self, soup):
         for p in soup.find_all('p'):
             if p.text.startswith("Prezzo: "):
-                return p.text[8:]
+                return p.text
         return None
         
     def soupScrapeGeneral(self, driver, g):
@@ -288,7 +295,6 @@ class RizzoliBook(book):
     
     def rizzoliReplaced(self, t):
         #Anche Rizzoli non vuole punteggiatura
-        # Piemme, oltre agli altri criteri di replace, non ammette maiuscole e punteggiatura
         t = t.translate(str.maketrans('', '', string.punctuation))
         t = t.replace("’","")
         t = replaced(t)
@@ -332,7 +338,7 @@ class RizzoliBook(book):
     def findPrice(self, soup):
         for li in soup.find_all('li'):
             if li.text.startswith("Prezzo: "):
-                return li.text+"\n" 
+                return li.text 
         
     def soupScrapeGeneral(self, driver, g):
         super().soupScrapeGeneral(driver, g, True, False, False, False, False)
