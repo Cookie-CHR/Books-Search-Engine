@@ -38,7 +38,7 @@ def siteTranslate(site):
     return switcher.get(site)    
 
 
-def searchWord(userQuery, category="tutte", site="tutti"):
+def searchWord(userQuery, category="tutte", site="tutti", minPrice="0.0", maxPrice="100.0"):
     # d = enchant.Dict()
     # d.check(userQuery)
     #creo la lista dei sinonimi
@@ -72,7 +72,7 @@ def searchWord(userQuery, category="tutte", site="tutti"):
     
         if len(results) > 0:       
             for r in results:  
-                if re.match(siteChoice, r['link']):
+                if re.match(siteChoice, r['link']) and minPrice <= float(r['price'][:-3]) <= maxPrice:
                     resultsTot.append(r) # aggiungo r ai risultati
     # Ri-ordino i risultati in base all'affinità
     resultsTot.sort(key=operator.attrgetter('score'), reverse=True)

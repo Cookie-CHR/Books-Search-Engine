@@ -68,9 +68,14 @@ resCol = [  fieldCol(i) for i in range(0,10)]
 layout = [  [sg.Text('Benvenuto/a nel nostro Search Engine!')],
 
             [sg.Text("Inserire una parola o frase da cercare: "), sg.InputText()],
-            
             [sg.Text("In quale categoria cercare: "), sg.OptionMenu(('Tutte', 'Titolo', 'Autore', 'Genere', 'Trama'), size=(10,1))],
             [sg.Text("In quale sito cercare:  "), sg.OptionMenu(('Tutti', 'LibriMondadori', 'Piemme', 'Rizzoli'), size=(14,1))],
+            [sg.Text("Fascia di prezzo:  Min"),\
+             sg.InputText(default_text = "0.00" , size=(10,1), pad = ((5, 0),3) ),\
+             sg.Text("€    Max", pad = ((0, 5),3)),\
+             sg.InputText(default_text = "100.00" , size=(10,1), pad = ((5, 0),3)),\
+             sg.Text("€", pad = (0,0))],
+            
             
             [sg.Button('Search'), sg.Button('Cancel')],
             [sg.Image(filename="Separator.png")],
@@ -89,8 +94,17 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Cancel': # Se l'utente chiude la finestra oppure clicca "Cancel"
         break
     elif event == 'Search':
+        # faccio un check sui prezzi
+        try:
+            values[3] = float(values[3].replace(",",".")) # Il replace è se per caso qualcuno mette i prezzi con la virgola
+        except:
+            values[3] = 0.0
+        try:
+            values[4] = float(values[4].replace(",","."))
+        except:
+            values[4] = 100.0
         # eseguo la query
-        results = searchWord(values[0], values[1], values[2])
+        results = searchWord(values[0], values[1], values[2], values[3], values[4])
         
         #Risultati! Iniziamo dalla riga di intestazione
         window['-OutputStart-'].update("Hai cercato "+values[0]+": Sono stati ritrovati "+str(len(results))+" risultati.") 
@@ -112,11 +126,5 @@ while True:
         # apro il file sul browser predefinito
         webbrowser.open_new_tab(results[i]['link'])
         
-        # if platform.system() == 'Darwin':       # macOS
-        #     subprocess.call(('open', filepath))
-        # elif platform.system() == 'Windows':    # Windows
-        #     os.startfile(filepath)
-        # else:                                   # linux variants
-        #     subprocess.call(['xdg-open', filepath])
 window.close()
 
