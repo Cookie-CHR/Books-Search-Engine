@@ -53,8 +53,8 @@ def hideField(i):
 
 #un risultato, associato al suo bottone
 def fieldSingle(i):
-    return [[sg.Button("Vai alla pagina", key='-BUTTON'+str(i)+'-', size=(6,7)), 
-            sg.MLine("", key='-FIELD'+str(i)+'-', size=(70,8), disabled=True, autoscroll = False)
+    return [[sg.Button("Vai alla pagina", key='-BUTTON'+str(i)+'-', size=(6,5)), 
+            sg.MLine("", key='-FIELD'+str(i)+'-', size=(82,6), disabled=True, autoscroll = False)
            ]]
 # tocca raggruppare questi puzzoni in una colonna, sennò non si allineano
 def fieldCol(i):
@@ -65,26 +65,25 @@ resCol = [  fieldCol(i) for i in range(0,10)]
 
 
 # Tutta la roba all'interno della finestra
-layout = [  [sg.Text('Benvenuto/a nel nostro Search Engine!')],
-
-            [sg.Text("Inserire una parola o frase da cercare: "), sg.InputText()],
-            [sg.Text("In quale categoria cercare: "), sg.OptionMenu(('Tutte', 'Titolo', 'Autore', 'Genere', 'Trama'), size=(10,1))],
-            [sg.Text("In quale sito cercare:  "), sg.OptionMenu(('Tutti', 'LibriMondadori', 'Piemme', 'Rizzoli'), size=(14,1))],
+layout = [  [sg.Image(filename="Titolo.png")],
+            [sg.Text("Inserire una parola o frase da cercare: "), sg.InputText(size = (65,1))],
+            [sg.Text("In quale categoria cercare: "), sg.OptionMenu(('Tutte', 'Titolo', 'Autore', 'Genere', 'Trama'), size=(12,1))],
+            [sg.Text("In quale sito cercare:  "), sg.OptionMenu(('Tutti', 'LibriMondadori', 'Piemme', 'Rizzoli'), size=(16,1))],
             [sg.Text("Fascia di prezzo:  Min"),\
              sg.InputText(default_text = "0.00" , size=(10,1), pad = ((5, 0),3) ),\
              sg.Text("€    Max", pad = ((0, 5),3)),\
-             sg.InputText(default_text = "100.00" , size=(10,1), pad = ((5, 0),3)),\
+             sg.InputText(default_text = "100.00" , size=(10,1), pad = ((5, 0),3) ),\
              sg.Text("€", pad = (0,0))],
             
             
             [sg.Button('Search'), sg.Button('Cancel')],
             [sg.Image(filename="Separator.png")],
             [sg.Text("", key='-OutputStart-', size=(100,1))],
-            [sg.Column(resCol, size=(610,400), scrollable=True, key='-COLUMN-', vertical_scroll_only = True)]
+            [sg.Column(resCol, size=(690,330), scrollable=True, key='-COLUMN-', vertical_scroll_only = True)]
          ]
          
 # Creazione della finestra
-window = sg.Window('Search Engine', layout, element_justification ='l', size=(700,700))
+window = sg.Window('Search Engine', layout, element_justification ='l', size=(740,680))
 
 
 # Event Loop to process "events" and get the "values" of the inputs
@@ -96,18 +95,18 @@ while True:
     elif event == 'Search':
         # faccio un check sui prezzi
         try:
-            values[3] = float(values[3].replace(",",".")) # Il replace è se per caso qualcuno mette i prezzi con la virgola
+            values[4] = float(values[3].replace(",",".")) # Il replace è se per caso qualcuno mette i prezzi con la virgola
         except:
-            values[3] = 0.0
+            values[4] = 0.0
         try:
-            values[4] = float(values[4].replace(",","."))
+            values[5] = float(values[4].replace(",","."))
         except:
-            values[4] = 100.0
+            values[5] = 100.0
         # eseguo la query
-        results = searchWord(values[0], values[1], values[2], values[3], values[4])
+        results = searchWord(values[1], values[2], values[3], values[4], values[5])
         
         #Risultati! Iniziamo dalla riga di intestazione
-        window['-OutputStart-'].update("Hai cercato "+values[0]+": Sono stati ritrovati "+str(len(results))+" risultati.") 
+        window['-OutputStart-'].update("Hai cercato "+values[1]+": Sono stati ritrovati "+str(len(results))+" risultati.") 
         
         #Poi mostriamo i risultati effettivi uno a uno
         i=1
