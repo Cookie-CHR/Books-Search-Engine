@@ -2,7 +2,7 @@ from whoosh.index import open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser, MultifieldParser
 import os, os.path
-from whoosh import qparser
+from whoosh import qparser, scoring
 from nltk.corpus import wordnet as wn
 import nltk
 import enchant
@@ -51,6 +51,10 @@ def searchWord(userQuery, category="tutte", site="tutti", minPrice="0.0", maxPri
                 synonyms.append(l.name())        
 
     searcher = ix.searcher()
+    #searcher = ix.searcher(weighting=scoring.TF_IDF())
+    #searcher = ix.searcher(weighting=scoring.BM25F(B=0.75, content_B=1.0, K1=1.5))
+    #searcher = ix.searcher(weighting=scoring.Frequency)
+    
     #implementa la ricerca anche per titolo, autore o genere, a seconda della scelta dell'utente
     parser = MultifieldParser(catTranslate(category), schema=ix.schema) 
 
