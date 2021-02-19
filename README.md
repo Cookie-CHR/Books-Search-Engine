@@ -5,11 +5,7 @@ Search Engine verticale a tema libri.
 Realizzato in collaborazione tra [@SerenaPassini](https://github.com/SerenaPassini) e [@Cookie-CHR](https://github.com/Cookie-CHR) per l'esame di Gestione dell'Informazione dell'[Unimore](https://www.unimore.it/).
 
 # Installazione e preparazione
-Prima di tutto, **clonare questa repo** ed estrarne i contenuti, tramite l'apposito pulsante o digitando sulla vostra shell il comando
-
-``git clone https://github.com/Cookie-CHR/Books-Search-Engine``
-
-Dopodiché, **scaricare gli import necessari**, che abbiamo elencato in [requirements.txt](https://github.com/Cookie-CHR/Books-Search-Engine/blob/main/requirements.txt). Ciò si può fare con un unico comando da shell:
+Per cominciare, **scaricare i moduli Python necessari** che abbiamo elencato in [requirements.txt](https://github.com/Cookie-CHR/Books-Search-Engine/blob/main/requirements.txt). Ciò si può fare con un unico comando da shell:
 
 ``pip install -r requirements.txt``
 
@@ -30,4 +26,3 @@ Per avviare il search engine, basta eseguire il main:
 ``python3 main.py``
 
 ![](https://github.com/Cookie-CHR/Books-Search-Engine/blob/main/Separator.png)
-
