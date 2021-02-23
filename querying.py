@@ -76,11 +76,15 @@ def searchWord(userQuery, category="tutte", site="tutti", minPrice="0.0", maxPri
     
         if len(results) > 0:       
             for r in results:  
-                if re.match(siteChoice, r['link']) and minPrice <= float(r['price'][:-3]) <= maxPrice:
-                    resultsTot.append(r) # aggiungo r ai risultati
+                if re.match(siteChoice, r['link']) :
+                    price = r['price'].replace("€","").replace("\n","").replace(" ","")
+                    if price == '':
+                        price = '0.00'
+                    if minPrice <= float(price) <= maxPrice:
+                        if r not in resultsTot:
+                            resultsTot.append(r) # aggiungo r ai risultati
     # Ri-ordino i risultati in base all'affinità
     resultsTot.sort(key=operator.attrgetter('score'), reverse=True)
-
     return resultsTot[0:min(len(resultsTot),10)]
 
 

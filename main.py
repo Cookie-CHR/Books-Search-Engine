@@ -95,11 +95,11 @@ while True:
     elif event == 'Search':
         # faccio un check sui prezzi
         try:
-            values[4] = float(values[3].replace(",",".")) # Il replace è se per caso qualcuno mette i prezzi con la virgola
+            values[4] = float(values[4].replace(",",".")) # Il replace è se per caso qualcuno mette i prezzi con la virgola
         except:
             values[4] = 0.0
         try:
-            values[5] = float(values[4].replace(",","."))
+            values[5] = float(values[5].replace(",","."))
         except:
             values[5] = 100.0
         # eseguo la query
