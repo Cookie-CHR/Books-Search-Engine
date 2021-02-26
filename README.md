@@ -4,6 +4,17 @@ Search Engine verticale a tema libri.
 
 Realizzato in collaborazione tra [@SerenaPassini](https://github.com/SerenaPassini) e [@Cookie-CHR](https://github.com/Cookie-CHR) per l'esame di Gestione dell'Informazione dell'[Unimore](https://www.unimore.it/).
 
+## Com'è andata?
+
+**Errori riscontrati:**
+- dimensione della text repository non eccezionale, ma non è stato contato come grande errore perché è comunque un progetto ben scalabile;
+- nella presentazione, occorreva dare più spazio alla grammatica del query language e del suo utilizzo;
+- servivano più test, abbiamo solo testato il modello di ranking mentre potevamo fare più roba;
+- più spazio al thesaurus: test a lui dedicati, magari un toggle o una maniera per attivarlo "a comando", soprattutto dato che la query expansion coi sinonimi aumenta la recall ma diminuisce la precision, includendo anche significati meno usati del termine (vedi il famoso esempio di "barca" che ha come sinonimo "mucchio").
+
+**Voto ottenuto:** 
+28
+
 # Installazione e preparazione
 Per cominciare, **scaricare i moduli Python necessari** che abbiamo elencato in [requirements.txt](https://github.com/Cookie-CHR/Books-Search-Engine/blob/main/requirements.txt). Ciò si può fare con un unico comando da shell:
 
