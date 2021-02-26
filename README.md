@@ -10,7 +10,7 @@ Realizzato in collaborazione tra [@SerenaPassini](https://github.com/SerenaPassi
 - dimensione della text repository non eccezionale, ma non è stato contato come grande errore perché è comunque un progetto ben scalabile;
 - nella presentazione, occorreva dare più spazio alla grammatica del query language e del suo utilizzo;
 - servivano più test, abbiamo solo testato il modello di ranking mentre potevamo fare più roba;
-- più spazio al thesaurus: test a lui dedicati, magari un toggle o una maniera per attivarlo "a comando", soprattutto dato che la query expansion coi sinonimi aumenta la recall ma diminuisce la precision, includendo anche significati meno usati del termine (vedi il famoso esempio di "barca" che ha come sinonimo "mucchio").
+- più spazio al thesaurus: test a lui dedicati, magari un toggle o una maniera per attivarlo "a comando" - soprattutto dato che la query expansion coi sinonimi aumenta la recall ma diminuisce la precision, includendo anche significati meno usati del termine (vedi il famoso esempio di "barca" che ha come sinonimo "mucchio").
 
 **Voto ottenuto:** 
 28
