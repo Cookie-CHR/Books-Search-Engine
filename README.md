@@ -4,7 +4,7 @@ Search Engine verticale a tema libri.
 
 Realizzato in collaborazione tra [@SerenaPassini](https://github.com/SerenaPassini) e [@Cookie-CHR](https://github.com/Cookie-CHR) per l'esame di Gestione dell'Informazione dell'[Unimore](https://www.unimore.it/).
 
-## Com'è andata?
+### Com'è andata?
 
 **Errori riscontrati:**
 - dimensione della text repository non eccezionale, ma non è stato contato come grande errore perché è comunque un progetto ben scalabile;
